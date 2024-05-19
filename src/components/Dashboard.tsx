@@ -16,7 +16,7 @@ export function Dashboard() {
   return (
     <div className="dashboard">
       <header className="header">
-        <h1 className="title">Text-to-Video Generator</h1>
+        <h1 className="title">Attack on Titan - Video Style Generator</h1>
         <p className="description">
           Generate videos from text prompts using advanced AI technology.
         </p>
