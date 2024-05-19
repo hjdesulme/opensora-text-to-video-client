@@ -1,24 +1,38 @@
 import { useRouter } from "next/router";
 import { Dashboard } from "../components/Dashboard";
+import { JobQueue } from "../components/JobQueue";
+import { StyleGenerator } from "../components/StyleGenerator";
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { pathname } = router;
 
   return (
     <div className="dashboard-page">
       <nav className="tabs">
-        <button onClick={() => router.push("/")} className="tab">
+        <button
+          onClick={() => router.push("/")}
+          className={`tab ${pathname === "/" ? "active" : ""}`}
+        >
           Style Generator
         </button>
-        <button onClick={() => router.push("/jobs")} className="tab">
+        <button
+          onClick={() => router.push("/jobs")}
+          className={`tab ${pathname === "/jobs" ? "active" : ""}`}
+        >
           Jobs
         </button>
-        <button onClick={() => router.push("/dashboard")} className="tab">
+        <button
+          onClick={() => router.push("/dashboard")}
+          className={`tab ${pathname === "/dashboard" ? "active" : ""}`}
+        >
           Dashboard
         </button>
       </nav>
       <div className="tab-content">
-        <Dashboard />
+        {pathname === "/" && <StyleGenerator />}
+        {pathname === "/jobs" && <JobQueue />}
+        {pathname === "/dashboard" && <Dashboard />}
       </div>
 
       <style jsx>{`
@@ -47,6 +61,9 @@ export default function DashboardPage() {
           transition: background-color 0.3s;
         }
         .tab:hover {
+          background: #005bb5;
+        }
+        .tab.active {
           background: #005bb5;
         }
         .tab-content {
