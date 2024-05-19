@@ -1,3 +1,4 @@
+import { fetchVideo } from '@/pages/api/generateVideo';
 import create from 'zustand';
 
 interface Job {
@@ -24,9 +25,19 @@ const placeholderVideos = [
 export const useStore = create<StoreState>((set) => ({
   videoUrl: '',
   jobs: [],
-  generateVideo: (prompt: string) => {
-    const randomVideoUrl = placeholderVideos[Math.floor(Math.random() * placeholderVideos.length)];
-    set({ videoUrl: randomVideoUrl });
+  generateVideo: async (prompt: string) => {
+    try {
+      const buffer = await fetchVideo(prompt);
+      const url = URL.createObjectURL(new Blob([buffer], { type: 'video/mp4' }));
+      console.log(url)
+      console.log(buffer)
+      set({ videoUrl: url });
+    } catch (error) {
+      console.error('Failed to generate video', error);
+      // Fallback to placeholder video if there's an error
+      const randomVideoUrl = placeholderVideos[Math.floor(Math.random() * placeholderVideos.length)];
+      set({ videoUrl: randomVideoUrl });
+    }
   },
   addJob: (job: Job) => set((state) => ({ jobs: [...state.jobs, job] })),
   updateJobStatus: (id: number, status: string) => set((state) => ({

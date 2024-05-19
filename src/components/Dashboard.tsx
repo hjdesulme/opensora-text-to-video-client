@@ -34,11 +34,13 @@ export function Dashboard() {
             <CornerDownLeft className="icon" />
           </button>
         </div>
-        {videoUrl && (
-          <div className="output-section">
-            <video src={videoUrl} controls autoPlay className="video" />
-          </div>
-        )}
+        {videoUrl ? (
+        <div className="output-section">
+          <video src={videoUrl} controls autoPlay className="video" />
+        </div>
+      ) : (
+        <p>No video to display</p>
+      )}
       </main>
       <footer className="footer">
         <p>© 2024 Will you even read this? All rights reserved.</p>
